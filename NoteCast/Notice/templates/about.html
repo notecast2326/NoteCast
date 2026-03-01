@@ -1,0 +1,357 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About | College Notice Board</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo-container">
+        <img src="{% static 'images/logo.png' %}" class="logo">
+        <span class="college-name">Sir Syed Institute For Technical Studies</span>
+    </div>
+
+    <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/categories/">Notices</a></li>
+    </ul>
+
+    <div class="auth-buttons">
+        <ul class="nav-links">
+
+    {% if request.user.is_authenticated %}
+    <li>
+        <a href="{% url 'profile' %}">
+            <i class="fas fa-user"></i> {{ request.user.username }}
+        </a>
+    </li>
+
+{% else %}
+    <li><a href="{% url 'login' %}">Login</a></li>
+{% endif %}
+</ul>
+    </div>
+</nav>
+
+
+<!-- HERO SLIDER -->
+<section class="about-hero">
+
+    <div class="hero-slider">
+
+        <div class="slide active" style="background-image:url('{% static 'images/banner1.jpeg' %}')"></div>
+        <div class="slide" style="background-image:url('{% static 'images/banner2.jpeg' %}')"></div>
+        <div class="slide" style="background-image:url('{% static 'images/banner3.jpeg' %}')"></div>
+
+    </div>
+
+    <div class="hero-content">
+
+    </div>
+
+</section>
+
+
+
+
+<!-- BREADCRUMB -->
+<section class="breadcrumb">
+    <div class="container">
+        <h2>About Us</h2>
+
+    </div>
+</section>
+
+<!-- ABOUT INTRO -->
+<section class="about-intro container">
+    <div class="about-grid">
+
+        <div class="about-text">
+            <h3>Welcome to Sir Syed Institute for Technical Studies</h3>
+            <p>
+                Established in 2002, Sir Syed Institute for Technical Studies is a prestigious
+                institution affiliated to Kannur University and managed by C.D.M.E.A.
+                The institution focuses on academic excellence, innovation and student development.
+            </p>
+
+            <p>
+                Our institution provides quality higher education in science, commerce and arts
+                with modern laboratories, research facilities and industry-oriented learning.
+            </p>
+        </div>
+
+        <div class="about-image">
+            <img src="{% static 'images/campus.jpeg' %}">
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ABOUT FULL DETAILS -->
+<section class="about-detailed container">
+
+    <h2 class="section-title">About Sir Syed Institute for Technical Studies</h2>
+
+    <!-- SECTION 1 -->
+    <div class="about-row">
+        <div class="about-text">
+
+            <p>
+                Sir Syed Institute for Technical Studies is a prestigious project of
+                Cannanore District Muslim Educational Association (C.D.M.E.A) which also runs
+                Sir Syed College, Keyi Sahib Training College, Sir Syed Higher Secondary School
+                and Kurumathur South U.P. School.
+            </p>
+
+            <p>
+                Sir Syed Institute for Technical Studies in Taliparamba, established in 2002,
+                is an educational institution dedicated to providing technical education and
+                fostering intellectual growth among its students.
+            </p>
+
+        </div>
+
+        <div class="about-img">
+            <img src="{% static 'images/campus.jpeg' %}" alt="Campus">
+        </div>
+    </div>
+
+
+    <!-- SECTION 2 -->
+    <div class="about-row reverse">
+        <div class="about-text">
+
+            <p>
+                Through its dedicated faculty, state-of-the-art facilities, and comprehensive curriculum,
+                the Sir Syed Institute for Technical Studies endeavors to empower its students with
+                the knowledge and skills necessary to excel in their chosen fields.
+            </p>
+
+            <p>
+                The Institute offers 4 PG courses and 13 UG courses. The college is affiliated to
+                Kannur University and approved by the Government of Kerala.
+            </p>
+
+        </div>
+
+        <div class="about-img">
+            <img src="{% static 'images/library.jpeg' %}" alt="Library">
+        </div>
+    </div>
+
+
+    <!-- SECTION 3 -->
+    <div class="about-row">
+        <div class="about-text">
+
+            <p>
+                The Institute provides individual hostel accommodations for both boys and girls.
+                The college has about 1500 students, 60 teaching staff and 20 non-teaching staff.
+                The students are expected to come to the College in a prescribed uniform.
+            </p>
+
+            <p>
+                The College has zero tolerance towards ragging. Students are expected to strictly
+                adhere to the code of conduct prescribed by the institution.
+            </p>
+
+        </div>
+
+        <div class="about-img">
+            <img src="{% static 'images/lab.jpeg' %}" alt="Laboratory">
+        </div>
+    </div>
+
+
+    <!-- SECTION 4 -->
+    <div class="about-row reverse">
+        <div class="about-text">
+
+            <p>
+                The Sir Syed Institute for Technical Studies in Taliparamba is dedicated to
+                providing its students with a well-rounded educational experience that goes
+                beyond academics.
+            </p>
+
+            <p>
+                Additionally, the college office is proactive in assisting students in accessing
+                scholarships and endowments, ensuring that financial constraints do not hinder
+                their academic pursuits.
+            </p>
+
+        </div>
+
+        <div class="about-img">
+            <img src="{% static 'images/seminar.jpeg' %}" alt="Seminar Hall">
+        </div>
+    </div>
+
+</section>
+
+<!-- STATS -->
+<section class="stats">
+    <div class="stat-box">
+        <h2>1500+</h2>
+        <p>Students</p>
+    </div>
+    <div class="stat-box">
+        <h2>60+</h2>
+        <p>Faculty</p>
+    </div>
+    <div class="stat-box">
+        <h2>17+</h2>
+        <p>Courses</p>
+    </div>
+    <div class="stat-box">
+        <h2>20+</h2>
+        <p>Labs & Facilities</p>
+    </div>
+</section>
+
+<!-- VISION MISSION -->
+<section class="vision-mission container">
+
+    <div class="card">
+        <i class="fas fa-eye"></i>
+        <h3>Our Vision</h3>
+        <p>
+            To create knowledgeable, skilled and socially responsible citizens
+            capable of contributing to the modern technological world.
+        </p>
+    </div>
+
+    <div class="card">
+        <i class="fas fa-bullseye"></i>
+        <h3>Our Mission</h3>
+        <p>
+            To impart quality education, research opportunities and professional
+            values through modern infrastructure and dedicated faculty.
+        </p>
+    </div>
+
+    <div class="card">
+        <i class="fas fa-graduation-cap"></i>
+        <h3>Our Objective</h3>
+        <p>
+            To empower students academically and professionally while nurturing
+            ethical values and leadership qualities.
+        </p>
+    </div>
+
+</section>
+
+<!-- FACILITIES -->
+<section class="facilities-section">
+    <div class="container">
+        <h2 class="section-title">Campus Facilities</h2>
+
+        <div class="facility-grid">
+
+            <div class="facility-card">
+                <i class="fas fa-flask"></i>
+                <h4>Advanced Laboratories</h4>
+                <p>Modern research labs for biotechnology, microbiology & CS</p>
+            </div>
+
+            <div class="facility-card">
+                <i class="fas fa-book"></i>
+                <h4>Digital Library</h4>
+                <p>5000+ books, journals and digital learning resources</p>
+            </div>
+
+            <div class="facility-card">
+                <i class="fas fa-wifi"></i>
+                <h4>Campus Wi-Fi</h4>
+                <p>High speed internet across campus</p>
+            </div>
+
+            <div class="facility-card">
+                <i class="fas fa-bus"></i>
+                <h4>Transportation</h4>
+                <p>Safe transportation facility for students</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery-section container">
+    <h2 class="section-title">Campus Gallery</h2>
+
+    <div class="gallery-modern">
+        <img src="{% static 'images/campus.jpeg' %}">
+        <img src="{% static 'images/library.jpeg' %}">
+        <img src="{% static 'images/lab.jpeg' %}">
+        <img src="{% static 'images/seminar.jpeg' %}">
+    </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-container">
+
+        <div class="footer-section">
+            <h3>Sir Syed Institute For Technical Studies</h3>
+            <p>
+                Official College Notice Board portal.<br>
+                Stay informed about notices, events, and announcements.
+            </p>
+        </div>
+
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Notices</a></li>
+                <li><a href="#">Login</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h4>Contact</h4>
+            <p>Email: ssitstmba@gmail.com</p>
+            <p>Phone: 0460 - 2200128 - 2205388</p>
+
+            <div class="social-icons">
+                <a href="#" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="twitter"><i class="fab fa-x-twitter"></i></a>
+                <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="youtube"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        © 2026 Sir Syed Institute For Technical Studies | All Rights Reserved
+    </div>
+</footer>
+<script>
+const slides = document.querySelectorAll(".slide");
+let index = 0;
+
+function changeSlide(){
+    slides[index].classList.remove("active");
+
+    index = (index + 1) % slides.length;
+
+    slides[index].classList.add("active");
+}
+
+setInterval(changeSlide, 4000); // change every 4 seconds
+</script>
+
+</body>
+</html>

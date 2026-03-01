@@ -1,0 +1,262 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>College Notice Board</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo-container">
+        <img src="/static/images/logo.png" class="logo">
+        <span class="college-name">Sir Syed Institute For Technical Studies</span>
+    </div>
+
+    <ul class="nav-links">
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="{% url 'notice_categories' %}">Notices</a></li>
+    </ul>
+
+    <div class="auth-buttons">
+        <ul class="nav-links">
+
+    {% if request.user.is_authenticated %}
+    <li>
+        <a href="{% url 'profile' %}">
+            <i class="fas fa-user"></i> {{ request.user.username }}
+        </a>
+    </li>
+
+{% else %}
+    <li><a href="{% url 'login' %}">Login</a></li>
+{% endif %}
+</ul>
+    </div>
+</nav>
+
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Welcome to the College Notice Board</h1>
+        <p>Stay updated with the latest notices, announcements, events & more.</p>
+        <a class="hero-btn" href="{% url 'notice_categories' %}">View Notices</a>
+    </div>
+</section>
+
+
+
+<!-- ================= FLOATING CHAT SYSTEM ================= -->
+
+<!-- Floating Message Icon -->
+<div id="chatToggle" class="chat-toggle">
+    <i class="fas fa-comments"></i>
+</div>
+
+<!-- Chat Window -->
+<div id="chatWindow" class="chat-window">
+
+    <div class="chat-header">
+        <span>College Assistant</span>
+        <button id="closeChat">✕</button>
+    </div>
+
+    <div id="chatMessages" class="chat-messages">
+        <div class="bot-message">👋 Hello! Ask me about fees, exams, courses or notices.</div>
+    </div>
+
+    <div class="chat-input">
+        <input type="text" id="messageInput" placeholder="Type a message...">
+        <button id="sendMessage"><i class="fas fa-paper-plane"></i></button>
+    </div>
+
+</div>
+
+
+<!-- ================= COLLEGE UPDATES ================= -->
+<section class="updates-section">
+    <div class="container">
+        <h2 class="section-title">College Updates</h2>
+
+        <div class="updates-gallery">
+
+            {% for notice in latest_events %}
+            <div class="update-card">
+
+                {% if notice.thumbnail %}
+                    <img src="{{ notice.thumbnail.url }}" class="update-image">
+                {% else %}
+                    <div class="no-image">No Image</div>
+                {% endif %}
+
+                <div class="update-content">
+                    <h3>{{ notice.notice_subject|truncatechars:40 }}</h3>
+
+                    <a href="{% url 'notice_detail' notice.pk %}" class="read-more">
+                        Read More
+                    </a>
+                </div>
+
+            </div>
+            {% empty %}
+                <p>No events uploaded yet.</p>
+            {% endfor %}
+
+        </div>
+
+        <div class="view-all-container">
+            <a href="{% url 'all_events' %}" class="view-all-btn">
+                View All Events
+            </a>
+        </div>
+
+    </div>
+</section>
+<!-- ABOUT SHORT SECTION -->
+<section class="about-detailed container">
+
+    <h2 class="section-title">About Sir Syed Institute for Technical Studies</h2>
+
+    <div class="about-detailed-grid">
+
+        <!-- LEFT CONTENT -->
+        <div class="about-detailed-text">
+
+            <p>
+                Sir Syed Institute for Technical Studies, established in 2002 at Taliparamba,
+                is a prestigious institution under C.D.M.E.A dedicated to academic excellence
+                and technical education. The college offers various UG and PG programs in
+                Science, Commerce, Management and Humanities, supported by modern laboratories,
+                digital library facilities, experienced faculty, and a disciplined campus
+                environment focused on overall student development.
+            </p>
+
+            <a href="{% url 'about' %}" class="view-more-btn">
+                View More
+            </a>
+
+        </div>
+
+        <!-- RIGHT IMAGE -->
+        <div class="about-detailed-images">
+            <img src="{% static 'images/campus.jpeg' %}" alt="Campus Image">
+        </div>
+
+    </div>
+
+</section>
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-container">
+
+        <div class="footer-section">
+            <h3>Sir Syed Institute For Technical Studies</h3>
+            <p>
+                Official College Notice Board portal.<br>
+                Stay informed about notices, events, and announcements.
+            </p>
+        </div>
+
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="/about/">About</a></li>
+                <li><a href="{% url 'notice_categories' %}">Notices</a></li>
+                <li><a href="#">Login</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h4>Contact</h4>
+            <p>Email: ssitstmba@gmail.com</p>
+            <p>Phone: 0460 - 2200128 - 2205388</p>
+
+            <div class="social-icons">
+                <a href="#" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="twitter"><i class="fab fa-x-twitter"></i></a>
+                <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="youtube"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        © 2026 Sir Syed Institute For Technical Studies | All Rights Reserved
+    </div>
+</footer>
+
+
+
+<!-- ================= CHAT SCRIPT ================= -->
+<script>
+
+    const toggle = document.getElementById("chatToggle");
+    const windowBox = document.getElementById("chatWindow");
+    const closeBtn = document.getElementById("closeChat");
+    const sendBtn = document.getElementById("sendMessage");
+    const input = document.getElementById("messageInput");
+    const messages = document.getElementById("chatMessages");
+
+    /* open */
+    toggle.onclick = () => windowBox.style.display = "flex";
+
+    /* close */
+    closeBtn.onclick = () => windowBox.style.display = "none";
+
+    /* add message */
+    function addMessage(text,type){
+        const div=document.createElement("div");
+        div.className = type==="user" ? "user-message" : "bot-message";
+        div.innerText=text;
+        messages.appendChild(div);
+        messages.scrollTop = messages.scrollHeight;
+    }
+
+    /* send */
+    function send(){
+        let msg=input.value.trim();
+        if(!msg) return;
+
+        addMessage(msg,"user");
+        input.value="";
+
+        fetch("/chatbot/",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json",
+                "X-CSRFToken":getCookie("csrftoken")
+            },
+            body:JSON.stringify({message:msg})
+        })
+        .then(r=>r.json())
+        .then(d=> addMessage(d.reply,"bot"));
+    }
+
+    sendBtn.onclick=send;
+    input.addEventListener("keypress",e=>{ if(e.key==="Enter") send(); });
+
+    function getCookie(name){
+        let value=null;
+        document.cookie.split(';').forEach(c=>{
+            let [k,v]=c.trim().split('=');
+            if(k===name) value=v;
+        });
+        return value;
+    }
+
+</script>
+
+</body>
+</html>
+
+
+

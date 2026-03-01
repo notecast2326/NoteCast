@@ -1,0 +1,149 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+     <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+<body>
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo-container">
+        <img src="/static/images/logo.png" class="logo">
+        <span class="college-name">Sir Syed Institute For Technical Studies</span>
+    </div>
+
+    <ul class="nav-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Notices</a></li>
+    </ul>
+
+    <div class="auth-buttons">
+        <ul class="nav-links">
+
+    {% if request.user.is_authenticated %}
+    <li>
+        <a href="{% url 'profile' %}">
+            <i class="fas fa-user"></i> {{ request.user.username }}
+        </a>
+    </li>
+
+{% else %}
+    <li><a href="{% url 'login' %}">Login</a></li>
+{% endif %}
+</ul>
+    </div>
+</nav>
+
+<!-- HERO SLIDER -->
+<section class="about-hero">
+
+    <div class="hero-slider">
+
+        <div class="slide active" style="background-image:url('{% static 'images/banner1.jpeg' %}')"></div>
+        <div class="slide" style="background-image:url('{% static 'images/banner2.jpeg' %}')"></div>
+        <div class="slide" style="background-image:url('{% static 'images/banner3.jpeg' %}')"></div>
+
+    </div>
+
+    <div class="hero-content">
+
+    </div>
+
+</section>
+<section class="category-section">
+    <div class="category-container">
+
+        <h2 class="category-title">Select User Category</h2>
+        <p class="category-subtitle">
+            Please choose your role to continue registration
+        </p>
+
+        <div class="category-grid">
+
+            <a href="{% url 'register_student' %}" class="category-card student">
+                <i class="fa-solid fa-user-graduate"></i>
+                <h3>Student</h3>
+                <p>Register as a student to access notices and updates.</p>
+            </a>
+
+            <a href="{% url 'register_hod' %}" class="category-card hod">
+                <i class="fa-solid fa-chalkboard-user"></i>
+                <h3>HOD</h3>
+                <p>Department head access for managing academic notices.</p>
+            </a>
+
+            <a href="{% url 'register_staff' %}" class="category-card staff">
+                <i class="fa-solid fa-user-tie"></i>
+                <h3>Office Staff</h3>
+                <p>Administrative access for publishing official notices.</p>
+            </a>
+
+        </div>
+
+    </div>
+</section>
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-container">
+
+        <div class="footer-section">
+            <h3>Sir Syed Institute For Technical Studies</h3>
+            <p>
+                Official College Notice Board portal.<br>
+                Stay informed about notices, events, and announcements.
+            </p>
+        </div>
+
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Notices</a></li>
+                <li><a href="#">Login</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h4>Contact</h4>
+            <p>Email: ssitstmba@gmail.com</p>
+            <p>Phone: 0460 - 2200128 - 2205388</p>
+
+            <div class="social-icons">
+                <a href="#" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="twitter"><i class="fab fa-x-twitter"></i></a>
+                <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="youtube"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        © 2026 Sir Syed Institute For Technical Studies | All Rights Reserved
+    </div>
+</footer>
+
+<script>
+const slides = document.querySelectorAll(".slide");
+let index = 0;
+
+function changeSlide(){
+    slides[index].classList.remove("active");
+
+    index = (index + 1) % slides.length;
+
+    slides[index].classList.add("active");
+}
+
+setInterval(changeSlide, 4000); // change every 4 seconds
+</script>
+
+</body>
+</html>

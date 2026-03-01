@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="category-container">
+
+    <h2>Select Notice Category</h2>
+
+    <div class="category-grid">
+
+        <a href="{% url 'notice_by_category' 'all' %}" class="cat-card">All Notices</a>
+
+        <a href="{% url 'notice_by_category' 'academic' %}" class="cat-card">Academic Notices</a>
+
+        <a href="{% url 'notice_by_category' 'events' %}" class="cat-card">Events & Programs</a>
+
+        <a href="{% url 'notice_by_category' 'department_updates' %}" class="cat-card">Department Notices</a>
+
+        <a href="{% url 'notice_by_category' 'exam' %}" class="cat-card">Exam Notifications</a>
+
+        <a href="{% url 'notice_by_category' 'holiday' %}" class="cat-card">Holiday Announcements</a>
+
+        <a href="{% url 'notice_by_category' 'urgent' %}"
+           class="cat-card urgent {% if urgent_exists %}blink-urgent{% endif %}">
+           Urgent Alerts
+        </a>
+
+      <a href="{% url 'notice_by_category' 'clubs' %}" class="cat-card clubs">Clubs & Activities</a>
+
+    </div>
+
+</div>
+
+<style>
+@keyframes blinkRed {
+    0%   { background-color: red; }
+    50%  { background-color: #ff4d4d; }
+    100% { background-color: red; }
+}
+
+.blink-urgent {
+    animation: blinkRed 1s infinite;
+    color: white !important;
+}
+</style>
+{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends "base.html" %}
+{% block content %}
+
+<section class="updates-section">
+    <div class="container">
+        <h2 class="section-title">All Events & Programs</h2>
+
+        <div class="updates-gallery">
+            {% for notice in events %}
+            <div class="update-card">
+                {% if notice.thumbnail %}
+                    <img src="{{ notice.thumbnail.url }}" class="update-image">
+                {% endif %}
+                <div class="update-content">
+                    <h3>{{ notice.notice_subject }}</h3>
+
+                    <a href="{% url 'notice_detail' notice.pk %}" class="read-more">
+                        Read More
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+</body>
+</html>

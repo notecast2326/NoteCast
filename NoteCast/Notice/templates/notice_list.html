@@ -1,0 +1,176 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+     <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo-container">
+        <img src="/static/images/logo.png" class="logo">
+        <span class="college-name">Sir Syed Institute For Technical Studies</span>
+    </div>
+
+    <ul class="nav-links">
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="{% url 'notice_categories' %}">Notices</a></li>
+    </ul>
+
+    <div class="auth-buttons">
+        <ul class="nav-links">
+
+    {% if request.user.is_authenticated %}
+    <li>
+        <a href="{% url 'profile' %}">
+            <i class="fas fa-user"></i> {{ request.user.username }}
+        </a>
+    </li>
+
+{% else %}
+    <li><a href="{% url 'login' %}">Login</a></li>
+{% endif %}
+</ul>
+    </div>
+</nav>
+
+
+
+<!-- HERO SLIDER -->
+<section class="about-hero">
+
+    <div class="hero-slider">
+
+        <div class="slide active" style="background-image:url('{% static 'images/banner1.jpeg' %}')"></div>
+        <div class="slide" style="background-image:url('{% static 'images/banner2.jpeg' %}')"></div>
+        <div class="slide" style="background-image:url('{% static 'images/banner3.jpeg' %}')"></div>
+
+    </div>
+
+    <div class="hero-content">
+
+    </div>
+
+</section>
+
+
+
+
+
+<div class="page-container">
+
+    <h2 class="section-title">All Notices</h2>
+
+{% if request.user.user_type == 'hod' or request.user.user_type == 'staff' %}
+    <a href="{% url 'create_notice' %}" class="create-btn">
+        <i class="fa fa-plus"></i> Create New Notice
+    </a>
+{% endif %}
+<ul class="notice-list">
+
+    {% for notice in notices %}
+    <li class="notice-item">
+
+        <div class="notice-main">
+
+            <div class="notice-badge
+                {% if notice.category == 'office' %}
+                    office
+                {% else %}
+                    department
+                {% endif %}
+            ">
+                {{ notice.category|title }}
+            </div>
+
+            <div class="notice-details">
+                <a href="{% url 'notice_detail' notice.id %}" class="notice-title">
+                    {{ notice.notice_subject }}
+                </a>
+
+                <div class="notice-info">
+                    {% if notice.department %}
+                        <span><i class="fa fa-building"></i> {{ notice.department }}</span>
+                    {% endif %}
+                    <span><i class="fa fa-calendar"></i> {{ notice.created_at|date:"M d, Y" }}</span>
+                </div>
+            </div>
+
+        </div>
+
+        {% if request.user == notice.created_by %}
+<div class="notice-action">
+               <!-- UPDATE BUTTON -->
+    <a href="{% url 'update_notice' notice.id %}" class="edit-icon">
+        <i class="fa fa-pen"></i>
+    </a>
+
+    <!-- DELETE BUTTON -->
+    <a href="{% url 'delete_notice' notice.id %}" class="delete-icon">
+        <i class="fa fa-trash"></i>
+    </a>
+</div>
+{% endif %}
+
+    </li>
+
+    {% empty %}
+        <li class="notice-empty">No notices available</li>
+    {% endfor %}
+
+</ul>
+
+</div>
+
+    <!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-container">
+
+        <div class="footer-section">
+            <h3>Sir Syed Institute For Technical Studies</h3>
+            <p>
+                Official College Notice Board portal.<br>
+                Stay informed about notices, events, and announcements.
+            </p>
+        </div>
+
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Notices</a></li>
+                <li><a href="#">Login</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h4>Contact</h4>
+            <p>Email: ssitstmba@gmail.com</p>
+            <p>Phone: 0460 - 2200128 - 2205388</p>
+
+            <div class="social-icons">
+                <a href="#" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="twitter"><i class="fab fa-x-twitter"></i></a>
+                <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="youtube"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        © 2026 Sir Syed Institute For Technical Studies | All Rights Reserved
+    </div>
+</footer>
+</body>
+</html>
+
+

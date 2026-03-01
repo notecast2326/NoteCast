@@ -1,0 +1,266 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo-container">
+        <img src="{% static 'images/logo.png' %}" class="logo">
+        <span class="college-name">Sir Syed Institute For Technical Studies</span>
+    </div>
+
+    <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/categories/">Notices</a></li>
+    </ul>
+
+    <div class="auth-buttons">
+        <ul class="nav-links">
+
+    {% if request.user.is_authenticated %}
+    <li>
+        <a href="{% url 'profile' %}">
+            <i class="fas fa-user"></i> {{ request.user.username }}
+        </a>
+    </li>
+
+{% else %}
+    <li><a href="{% url 'login' %}">Login</a></li>
+{% endif %}
+</ul>
+    </div>
+</nav>
+
+
+<!-- HERO SLIDER -->
+<section class="about-hero">
+    <div class="hero-slider">
+        <div class="slide active" style="background-image:url('{% static 'images/banner1.jpeg' %}')"></div>
+        <div class="slide" style="background-image:url('{% static 'images/banner2.jpeg' %}')"></div>
+        <div class="slide" style="background-image:url('{% static 'images/banner3.jpeg' %}')"></div>
+    </div>
+</section>
+
+
+<div class="profile-container">
+    <div class="profile-card">
+
+        <!-- LEFT SIDE -->
+        <div class="profile-left">
+            <div class="profile-image-wrapper">
+
+                {% if user.photo %}
+                    <img src="{{ user.photo.url }}" class="profile-photo">
+                {% else %}
+                    <div class="profile-placeholder">
+                        <i class="fa fa-user"></i>
+                    </div>
+                {% endif %}
+
+                <!-- Update Icon -->
+                <div class="photo-edit-icon" onclick="document.getElementById('photoInput').click();">
+                    <i class="fa fa-camera"></i>
+                </div>
+
+            </div>
+
+            <h2>{{ user.username }}</h2>
+            <p class="user-type">{{ user.user_type|title }}</p>
+            <p class="user-email">{{ user.email }}</p>
+        </div>
+
+
+        <!-- RIGHT SIDE -->
+        <div class="profile-right">
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <!-- ✅ MOVED FILE INPUT INSIDE FORM -->
+                <input type="file" name="photo" id="photoInput" style="display:none">
+
+                <!-- PHONE -->
+                <div class="profile-field">
+                    <label>Phone</label>
+                    <div class="field-display">
+                        <span id="phoneText">{{ user.phone|default:"Not added" }}</span>
+                        <i class="fa fa-pen edit-icon" onclick="editField('phone')"></i>
+                    </div>
+                    <div class="field-edit" id="phoneEdit" style="display:none">
+                        {{ form.phone }}
+                    </div>
+                </div>
+
+                <!-- ADDRESS -->
+                <div class="profile-field">
+                    <label>Address</label>
+                    <div class="field-display">
+                        <span id="addressText">{{ user.address|default:"Not added" }}</span>
+                        <i class="fa fa-pen edit-icon" onclick="editField('address')"></i>
+                    </div>
+                    <div class="field-edit" id="addressEdit" style="display:none">
+                        {{ form.address }}
+                    </div>
+                </div>
+
+                <!-- UNIVERSITY REG -->
+          <!-- <div class="profile-field">
+                    <label>University Reg No</label>
+                    <div class="field-display">
+                        <span id="regText">{{ user.university_reg_no|default:"Not added" }}</span>
+                        <i class="fa fa-pen edit-icon" onclick="editField('reg')"></i>
+                    </div>
+                    <div class="field-edit" id="regEdit">
+                        {{ form.university_reg_no }}
+                    </div>
+                </div>
+
+                <div class="profile-buttons">
+                    <button type="submit" class="save-profile-btn">
+                        <i class="fa fa-save"></i> Save Changes
+                    </button>
+
+                    <a href="{% url 'logout' %}" class="logout-btn-inline">
+                        <i class="fa fa-sign-out-alt"></i> Logout
+                    </a>
+                </div> -->
+
+
+                <!-- STUDENT ONLY -->
+               {% if user.user_type == "student" %}
+    <div class="profile-field">
+        <label>Department</label>
+        <div class="field-display">
+            <span>{{ user.get_department_display }}</span>
+        </div>
+    </div>
+
+    <div class="profile-field">
+        <label>Admission No</label>
+        <div class="field-display">
+            <span>{{ user.admission_no|default:"Not added" }}</span>
+        </div>
+    </div>
+
+    <div class="profile-field">
+        <label>University Reg No</label>
+
+        <div class="field-display">
+            <span id="regText">{{ user.university_reg_no|default:"Not added" }}</span>
+            <i class="fa fa-pen edit-icon" onclick="editField('reg')"></i>
+        </div>
+
+        <div class="field-edit" id="regEdit" style="display:none;">
+            {{ form.university_reg_no }}
+        </div>
+    </div>
+{% endif %}
+
+                <!-- HOD ONLY -->
+                {% if user.user_type == "hod" %}
+                    <div class="profile-field">
+                        <label>Department</label>
+                        <div class="field-display">
+                            <span>{{ user.get_department_display }}</span>
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="profile-buttons">
+                    <button type="submit" class="save-profile-btn">
+                        <i class="fa fa-save"></i> Save Changes
+                    </button>
+
+                    <a href="{% url 'logout' %}" class="logout-btn-inline">
+                        <i class="fa fa-sign-out-alt"></i> Logout
+                    </a>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<!-- FOOTER (UNCHANGED) -->
+<footer class="footer">
+    <div class="footer-container">
+
+        <div class="footer-section">
+            <h3>Sir Syed Institute For Technical Studies</h3>
+            <p>
+                Official College Notice Board portal.<br>
+                Stay informed about notices, events, and announcements.
+            </p>
+        </div>
+
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Notices</a></li>
+                <li><a href="#">Login</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h4>Contact</h4>
+            <p>Email: ssitstmba@gmail.com</p>
+            <p>Phone: 0460 - 2200128 - 2205388</p>
+
+            <div class="social-icons">
+                <a href="#" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="twitter"><i class="fab fa-x-twitter"></i></a>
+                <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="youtube"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        © 2026 Sir Syed Institute For Technical Studies | All Rights Reserved
+    </div>
+</footer>
+
+
+<script>
+const slides = document.querySelectorAll(".slide");
+let index = 0;
+
+function changeSlide(){
+    slides[index].classList.remove("active");
+    index = (index + 1) % slides.length;
+    slides[index].classList.add("active");
+}
+
+setInterval(changeSlide, 4000);
+</script>
+
+<script>
+function editField(field){
+    let editBox = document.getElementById(field + "Edit");
+
+    if(editBox.style.display === "block"){
+        editBox.style.display = "none";
+    } else {
+        editBox.style.display = "block";
+    }
+}
+</script>
+
+</body>
+</html>
